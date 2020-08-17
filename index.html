@@ -21,18 +21,26 @@
 </h3>
 </div>
   <script>
- var vm=new Vue({
-      el:"#app",
-      data:{
+  var data={
           msg:"黄瓜",
           istrue:1==1,
           str:'hello vue'
-      },
+      }
+    //数据发生改变时，视图也发生改变，数据驱动视图
+  var vm=new Vue({
+      el:"#app",
+      data:data,
+      data:function(){
+          return {
+              msg:'指令系统'
+          }
+      }
       //如果template中定义内容，优先加载template,
       //没有定义，优先#app内容
       //template:"<div>{{msg}}</div>"
   })
-  console.log(vm.$data)
+  console.log(vm.$data==data)//true
+  //除了数据属性,暴露了一些有用的实例属性和方法，他们都有前缀$
   
   </script>
  </body>
