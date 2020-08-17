@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+<div id="app">
+<h2>
+    {{msg}}
+</h2>
+<h3>{{1+1}} {{istrue}} {{str.split('').reverse().join('')}}
+
+    {{1>2?"真的":"假的"}}
+    {{ {'name':'张三'} }}
+</h3>
+</div>
+  <script>
+ var vm=new Vue({
+      el:"#app",
+      data:{
+          msg:"黄瓜",
+          istrue:1==1,
+          str:'hello vue'
+      },
+      //如果template中定义内容，优先加载template,
+      //没有定义，优先#app内容
+      //template:"<div>{{msg}}</div>"
+  })
+  console.log(vm.$data)
+  
+  </script>
+ </body>
+</html>
