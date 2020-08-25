@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 双向数据绑定 </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+         <!--v-model双向数据绑定 只能体现在表单控件中  只能应用在有value属性中-->
+       <input type="text" v-model="msg" >
+       <h2>{{msg}}</h2>
+       <!--语法糖 是v-bind:value v-on:input-->
+       <input type="text" v-bind:value="msgtest"  v-on:input="valueChange">
+       <h2>{{msgtest}}</h2>
+     </div>
+    <script>
+        //创建实例化对象
+        var app=new Vue({
+            el:"#app",
+            data:function(){
+                return{
+                    msg:'大白',
+                    msgtest:'test'
+                }
+            },
+            methods:{
+                valueChange(e){
+                    // console.log(e.target.value)
+                    this.msgtest=e.target.value
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>

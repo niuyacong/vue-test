@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 指令系统 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+ <style>
+     .box{
+         width: 300px;
+         height: 300px;
+         background-color: red;
+     }
+     .active{
+         background-color: green;
+     }
+ </style>
+
+ <body>
+     <div id="app">
+         <!--v-text innerText-->
+        <h2>{{msg}}</h2>
+        <p v-text="msg"></p>
+        <!--v-html  innerHtml-->
+        <div v-html="msghtml"></div>
+        <div v-text="1+1"></div>
+        <!--v-if 值为假，不在页面上渲染 appendChild,removeChild 更高的切换开销-->
+        <div v-if="isShow">显示啦</div>
+        <div v-if="Math.random()>0.5">随机数显示</div>
+        <div v-else>随机数不显示</div>
+        <!--v-show  控制样式display:none|block 用于元素频繁的显示隐藏，更高的初始化渲染开销-->
+        <div v-show="isShow">show显示</div>
+        <!--v-bind 绑定标签上的属性(内置属性 比如a标签的href,img的src，和自定义属性 test)-->
+        <!--简写 ：-->
+        <div class="box" v-bind:class="{active:!isGreen}" v-bind:test="test" :name="test"></div>
+        <img src="">
+        <a href=""></a>
+        <!--v-on绑定事件-->
+        <div class="box" v-bind:class="{active:!isGreen}" v-on:click="clickhandler"></div>
+        <!--遍历数组-->
+        <ul>
+            <li v-for="(item,index) in menuList">
+                <h5>{{item.id}}</h5>
+                <h3>{{item.name}}</h3>
+                <em>{{item.price}}</em>
+            </li>
+        </ul>
+        <!--v-for-->
+        <!--遍历对象-->
+        <ul>
+            <li v-for="(value,key) in person">
+                {{key}}-----{{value}}
+            </li>
+        </ul>
+     </div>
+    <script>
+        //创建实例化对象
+        new Vue({
+            el:"#app",
+            data:function(){
+                return{
+                    msg:'指令系统',
+                    msghtml:'<h2>指令系统2</h2>',
+                    isShow:true,
+                    isGreen:false,
+                    test:'nyc',
+                    menuList:[
+                        {id:1,name:"麻辣烫",price:"25"},
+                        {id:2,name:"牛排",price:"200"},
+                        {id:3,name:"小黄鱼",price:"50"}
+                    ],
+                    person:{
+                        name:'大白',
+                        age:20,
+                        like:'book'
+                    }
+                }
+            },
+            methods:{
+                clickhandler(e){
+                    this.isGreen=!this.isGreen;
+                }
+            },
+            template:""
+        })
+    </script>
+</body>
+</html>
