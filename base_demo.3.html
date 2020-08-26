@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 组件传值 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+       <app></app>
+       <!-- <Vbtn /> -->
+       <!-- <Child /> -->
+     </div>
+    <script>
+        var Vheader={
+            template:`<div>我是头部组件</div>`
+        }
+        var Vaside={
+            template:`<div>我是侧边栏组件</div>`
+        }
+        //首字母大写
+        var App={
+            template:`
+            <div>
+                <Vheader />
+                <Vaside />
+                <Vbtn />
+                <Parent />
+            </div>
+            `,
+            components:{
+                Vheader,
+                Vaside
+            }
+        }
+        //全局组件
+        Vue.component('Vbtn',{
+            template:`<button>我是按钮</button>`
+        })
+
+        Vue.component('Child',{
+            props:['childData'],
+            template:`
+            <div>
+            <p>我是一个子组件</p>
+            <input type='text' v-model='childData' @input='changeValue(childData)'>
+            </div>`,
+            methods:{
+                changeValue(val){
+                    //在函数中触发$emit,(自定义事件名，参数)
+                    this.$emit('childHander',val)
+                }
+            }
+            
+        })
+        //父组件向子组件传值
+        //1、先给父组件中绑定自定义的属性
+        //2、在子组件中使用props接收父组件传递的数据
+
+        //子组件向父组件传值
+        //1、在父组件绑定  自定义的事件
+        //2、在子组件中 触发原生的事件 在函数中使用$emit触发自定义函数
+        Vue.component('Parent',{
+            data(){
+               return{
+                msg:'我是父组件数据'
+               }
+            },
+            template:`
+            <div>
+                <p>我是一个父组件</p>
+                <Child :childData='msg'  @childHander='childHander'/>
+            </div>`,
+            methods:{
+                childHander(val){
+                    console.log(val)
+                }
+            }
+        })
+        //创建实例化对象
+        new Vue({
+            el:"#app",
+            data(){
+                return{
+
+                }
+            },
+            components:{
+               App:App
+           },
+            template:""
+        })
+    </script>
+</body>
+</html>
