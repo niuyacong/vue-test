@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 过滤器 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+        
+     </div>
+    <script>
+        //过滤器:为页面中的数据进行添油加醋的功能
+        //过滤器两种  全局过滤器  局部过滤器
+        //步骤
+        //局部
+        //1、声明过滤器
+        //2、{{数据 | 过滤器名字 }}
+
+        //全局过滤器
+        Vue.filter('myReverse',function(value,arg){
+            return (arg+' '+value).split('').reverse().join('');
+        })
+        var App={
+            data(){
+                return {
+                    price:0,
+                    msg:'hello'
+                }
+            },
+            template:`
+            <div>
+                <input type='number' v-model='price' />
+                <h3 >{{price|myCurrentcy}}</h3>
+                <h3 >{{msg|myReverse('nyc')}}</h3>
+            </div>
+            `,
+            filters:{
+                //1、声明过滤器
+                myCurrentcy:function(value){
+                    return '￥'+value
+                }
+            }
+        }
+        console.log(App)
+        //创建实例化对象
+        var vm=new Vue({
+            el:"#app",
+            data:function(){
+                return{
+                    msg:'组件的创建',
+                    
+                }
+            },
+            //挂载子组件
+            components:{
+                App:App
+            },
+            //父组件直接使用
+           template:`
+            <App></App>
+           `
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue watch监听 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+        <input type="text" v-model="msg">
+        <h3>{{msg}}</h3>
+        <h4>{{stus[0].name}}</h4>
+        <input type="text" v-model="stus[0].name">
+
+     </div>
+    <script>
+        //watch监听单个属性（基本数据类型）
+        //复杂的数据类型  深度监视
+        //创建实例化对象
+        var vm=new Vue({
+            el:"#app",
+            data:function(){
+                return{
+                    msg:'组件的创建',
+                    stus:[{name:'nyc_test'}]
+                }
+            },
+           watch:{
+               //监听字符串或数字（字符串的内存地址）监听内存地址
+               msg:function(newV,oldV){
+                   console.log(newV,oldV)
+                   if(newV=="123"){
+                       this.msg='nyc'
+                   }
+               },
+               //数组监听是不行的
+               stus:function(newV,oldV){
+                   console.log(1)
+               },
+               //监听负载数据类型object  array  深度监听
+               stus:{
+                   deep:true,
+                   handler:function(newV,oldV){
+                    console.log(newV[0].name,oldV[0].name)
+                   }
+               }
+           }
+        })
+        console.log(vm)
+    </script>
+</body>
+</html>
