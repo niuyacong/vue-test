@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 组件的生命周期 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+        <App></App>
+     </div>
+    <script>
+        /*
+            beforeCreate
+            created
+            beforeMount
+            mounted
+            beforeUpdate
+            updated
+            beforeDestroy
+            destroyed
+            activated
+            deactivated
+        */
+        Vue.component('Test',{
+            data(){
+                return {
+                    msg:'hello world'
+                }
+            },
+            template:`
+                <div>
+                    <div>{{msg}}</div>
+                    <input type='text' value=''/>
+                    <button @click="changerHandler">改变</button>
+                </div>
+            `,
+            methods:{
+                changerHandler(){
+                    this.msg=this.msg+"哈哈"
+                }
+            },
+            beforeCreate(){
+                //组件创建之前
+                console.log(this.msg)//undefined
+
+            },
+            created(){
+                //组件创建之后
+                //可以操作后端数据，数据驱动视图
+                //应用：发起ajax请求
+                console.log(this.msg)
+            },
+            beforeMount(){
+                //挂载数据到dom之前(组件渲染dom之前)
+                console.log(document.getElementById('app'))//undefined
+            },
+            mounted(){
+                //挂载数据到dom之后(组件渲染dom后)
+                //应用：操作dom
+                console.log(document.getElementById('app'))
+
+            },
+            beforeUpdate(){
+                //更新dom之前
+                //应用：获取原始dom
+                console.log(document.getElementById('app').innerHTML)
+            },
+            updated(){
+                //更新dom之后
+                //应用：获取最新dom
+                console.log(document.getElementById('app').innerHTML)
+
+            },
+            beforeDestroy(){
+                //销毁之前
+                //应用:清定时器等
+                console.log('beforeDestroy')
+            },
+            destroyed(){
+                //销毁之后
+                //应用:清定时器等
+                console.log('destroyed')
+            },
+            activated(){
+                //组件被激活了 当组件用keep-alive时
+                console.log('组件激活')
+            },
+            deactivated(){
+                //组件被停用了 当组件用keep-alive时
+                console.log('组件停用')
+            }
+
+        })
+        var App={
+            data(){
+                return {
+                    isshow:true
+                }
+            },
+            methods:{
+            },
+            //vue 内置组件 keep-alive 能在组件切换过程中将状态保存在内存中，防止重复渲染dom,不再走组件的销毁方法
+            template:`
+            <div class="app">我是入口组件
+            <keep-alive>
+                <Test v-if="isshow"/> 
+                </keep-alive>
+                <!--组件会创建，销毁，循环-->
+                <button @click="isshow=!isshow">显示隐藏</button>
+            </div>
+            `
+        }
+        //创建实例化对象
+        var vm=new Vue({
+            el:"#app",
+            data:function(){
+                return{
+                    msg:'组件的创建',
+                    
+                }
+            },
+            //挂载子组件
+            components:{
+                App:App
+            },
+            //父组件直接使用
+         
+        })
+    </script>
+</body>
+</html>
