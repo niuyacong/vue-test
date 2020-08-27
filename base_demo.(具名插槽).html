@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> vue 具名插槽 </title>
+  <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+ </head>
+
+ <body>
+     <div id="app">
+        <App></App>
+     </div>
+    <script>
+        Vue.component('myLi',{
+            template:`
+            <li>
+                
+                <slot name='two'></slot>
+                <slot name='three'></slot>
+            </li>`
+        })
+        var App={
+            template:`
+            <div>
+                <ul>
+                    <myLi>
+                        <h2 slot='three'>我是第一个坑</h2>
+                        <h3 slot='two'>我是第二个坑</h3>
+                    </myLi>
+                </ul>
+            </div>
+            `
+        }
+        //创建实例化对象
+        new Vue({
+            el:"#app",
+            components:{
+                App
+            },
+            data(){
+                return{
+
+                }
+            },
+            methods:{
+               
+            },
+            template:""
+        })
+    </script>
+</body>
+</html>

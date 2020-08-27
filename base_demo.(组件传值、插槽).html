@@ -4,7 +4,40 @@
   <title> vue 组件传值 </title>
   <script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
  </head>
-
+<style>
+    .default{
+        display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    }
+    .primary{
+        color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    }
+    .success{
+        color: #fff;
+    background-color: #67c23a;
+    border-color: #67c23a;
+    }
+</style>
  <body>
      <div id="app">
        <app></app>
@@ -24,7 +57,8 @@
             <div>
                 <Vheader />
                 <Vaside />
-                <Vbtn />
+                <Vbtn type='primary'>登录</Vbtn>
+                <Vbtn type='success'>注册</Vbtn>
                 <Parent />
             </div>
             `,
@@ -35,7 +69,19 @@
         }
         //全局组件
         Vue.component('Vbtn',{
-            template:`<button>我是按钮</button>`
+            data(){
+                return{
+                    myType:''
+                }
+            },
+            created(){
+                //方法中可以获取到
+               this.myType=this.type;
+               console.log(this.myType)
+            },
+            //插槽  内置组件  slot  作为承载分发内容的出口
+            template:`<button class='default' :class='type'><slot></slot></button>`,
+            props:['type']
         })
 
         Vue.component('Child',{
